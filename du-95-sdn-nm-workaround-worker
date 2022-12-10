@@ -1,0 +1,22 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 95-sdn-nm-workaround-worker
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: 'data:,%23%20WARNING%3A%20This%20is%20a%20workaround%20provided%20by%20Red%20Hat%20Support%20and%20should%20be%20used%20only%20as%20per%20Red%20Hat%20instruction%0A%23%20ignore%20known%20SDN-managed%20devices%0A%5Bdevice%5D%0Amatch-device%3Dinterface-name%3Abr-int%3Binterface-name%3Abr-local%3Binterface-name%3Abr-nexthop%3Binterface-name%3Aovn-k8s-%2A%3Binterface-name%3Ak8s-%2A%3Binterface-name%3Atun0%3Binterface-name%3Abr0%3Binterface-name%3Apatch-br-%2A%3Binterface-name%3Abr-ext%3Binterface-name%3Aext-vxlan%3Binterface-name%3Aext%3Binterface-name%3Aint%3Binterface-name%3Avxlan_sys_%2A%3Binterface-name%3Agenev_sys_%2A%3Bdriver%3Aveth%0Amanaged%3D0'
+        mode: 420
+        overwrite: true
+        path: /etc/NetworkManager/conf.d/sdn.conf
+  extensions: null
+  fips: false
+  kernelArguments: null
+  kernelType: ""
+  osImageURL: ""
